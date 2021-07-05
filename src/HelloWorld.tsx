@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './style.css';
 import logo from './logo.jpeg';
 import { Player } from '@remotion/player';
-import { useCurrentFrame, interpolate, spring, Sequence, Img } from 'remotion';
+import { Audio, useCurrentFrame, interpolate, spring, Sequence, Img } from 'remotion';
 import Lottie from 'lottie-react';
 import { news } from './news';
 import { Lottier, useLottie } from 'remotion-lottie';
@@ -21,8 +21,8 @@ const Title = ({ title, index }) => {
     frame: frame
   });
 
-  const boldDuration = (eachDuration * fps) / title.split(' ').length;
-
+  const boldDuration = (durationInfo.duration[index / 2] * fps) / title.split(' ').length;
+  
   return (
     <div className={"container"}>
       <div className={"card"} style={{ transform: `scale(${scale})`, fontSize: 100 }}>
@@ -61,7 +61,11 @@ export const fps = 30;
 
 const theme = '';
 
+export const sumReduce = (sum : number, i: number) => {sum += i; return sum};
 
+const itemDuration = (item: number) => durationInfo.duration.slice(0, item).reduce(sumReduce, 0);
+
+console.log(itemDuration, durationInfo)
 
 export const comm = val => () => {
   const frame = useCurrentFrame();
@@ -80,22 +84,24 @@ export const comm = val => () => {
             from={
               !n.length
                 ? Math.floor(i / 2) * animationDuration * fps +
-                  Math.ceil(i / 2) * eachDuration * fps
-                : (i / 2) * eachDuration * fps + i * 30
+                  itemDuration(Math.ceil(i / 2)) * fps
+                : itemDuration(Math.ceil(i / 2)) * fps + i * fps
             }
-            durationInFrames={!n.length ? 60 : eachDuration * fps}
+            durationInFrames={!n.length ? animationDuration * fps : durationInfo.duration[i / 2] * fps}
           >
             {!n.length ? (
 							<div ref={uiref} className={"svg-holder"} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 								<h1 style={{position: 'absolute', top: '60px', backgroundColor: 'white'}}>KiranDheep - Bizzfeed</h1>
 								<Lottier
 								stayAtLastFrame={true}
-                // animationData={data}
 								data={data}
               />
 							</div>
             ) : (
+              <>
+              <Audio src={`http://localhost:5000/t${i}.wav`} />
               <Title title={n} index={i} />
+              </>
             )}
           </Sequence>
         </>

@@ -8,6 +8,7 @@
 		"upgrade": "remotion upgrade",
 		"server": "ts-node server.tsx",
 		"tts": "rm -rf audio; mkdir audio; ts-node tts.ts",
+		"docker": "docker ps --filter ancestor=synesthesiam/coqui-tts:latest --format '{{.ID}}'",
 		"test": "eslint src --ext ts,tsx,js,jsx && tsc"
 	},
 	"repository": {},
