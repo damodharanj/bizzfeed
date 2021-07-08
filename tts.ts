@@ -39,12 +39,16 @@ function execE(items: Array<any>, i: number, meta: {duration: Array<any>}) {
     wavFileInfo.infoByFilename(`./audio/t${i}.wav`, function(err: any, info: any){
       console.log('duration', Math.ceil(info.duration));
       meta.duration.push(Math.ceil(info.duration));
+      if (items[i + 1]) {
+        execE(items, i + 1, meta);
+      } else if (items[i + 2]) {
+        execE(items, i + 2, meta);
+      } else {
+        console.log(meta);
+        fs.writeFile('./audio/meta.json', JSON.stringify(meta), () => {});
+        fs.writeFile('./audio/audio.ts', `${items.filter(i => i.length).map((item, i) => `import audio${2 * i} from './t${2 * i}.wav'; \n export const t${2 * i} = audio${2 * i};`).join('\n')}`, () => {});
+      }
     });
-    if (i + 1 < items.length) {
-      execE(items, items[i + 1] ? i + 1 : i + 2, meta);
-    } else {
-      fs.writeFile('./audio/meta.json', JSON.stringify(meta), () => {});
-    }
   });
 }
 

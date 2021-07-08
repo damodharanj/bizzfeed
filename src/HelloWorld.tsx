@@ -8,6 +8,10 @@ import { news } from './news';
 import { Lottier, useLottie } from 'remotion-lottie';
 import durationInfo from '../audio/meta.json';
 import data from './stock.json';
+import * as audios from '../audio/audio'
+
+
+console.log(audios);
 
 const colors = ['purple', 'green', 'blue', 'red'];
 
@@ -76,6 +80,8 @@ export const comm = val => () => {
 			uiref.current.querySelector('svg').setAttribute('viewBox', '');
 		}
 	})
+
+  const as: any = audios;
   return (
     <div>
       {val.map((n, i) => (
@@ -99,7 +105,7 @@ export const comm = val => () => {
 							</div>
             ) : (
               <>
-              <Audio src={`http://localhost:5000/t${i}.wav`} />
+              <Audio src={as[`t${i}`]} />
               <Title title={n} index={i} />
               </>
             )}
