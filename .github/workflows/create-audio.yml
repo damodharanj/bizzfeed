@@ -23,7 +23,8 @@ jobs:
       - run: npm i
       - run: npm run tts
       - run: ls audio
+      - run: npm run build
       - uses: actions/upload-artifact@v2
         with:
-          name: t1.wav
-          path: audio/t1.wav
+          name: out.mp4
+          path: out.mp4
