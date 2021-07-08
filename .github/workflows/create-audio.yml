@@ -25,4 +25,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: t1.wav
-          path: ./audio/t1.wav
+          path: audio/t1.wav
