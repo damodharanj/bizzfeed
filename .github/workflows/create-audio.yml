@@ -9,7 +9,7 @@ on:
         description: "Which color should it be in?"
         required: true
         default: "black"
-name: Render video
+name: Create audio
 jobs:
   render:
     name: Render video
@@ -21,10 +21,9 @@ jobs:
       - run: sudo apt install ffmpeg
       - run: docker pull "synesthesiam/coqui-tts:latest"
       - run: npm i
-      - run: npm run build -- --props="$WORKFLOW_INPUT"
-        env:
-          WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
+      - run: npm run tts
+      - run: ls audio
       - uses: actions/upload-artifact@v2
         with:
-          name: out.mp4
-          path: out.mp4
+          name: t1.wav
+          path: audio/t1.wav
