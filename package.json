@@ -7,8 +7,7 @@
 		"build": "remotion render src/index.tsx HelloWorld out.mp4",
 		"upgrade": "remotion upgrade",
 		"server": "ts-node server.tsx",
-		"tts": "rm -rf audio; mkdir audio; ts-node tts.ts",
-		"docker": "docker ps --filter ancestor=synesthesiam/coqui-tts:latest --format '{{.ID}}'",
+		"tts": "rm -rf audio; mkdir audio; export HOME=$PWD/audio; ts-node tts.ts;",
 		"test": "eslint src --ext ts,tsx,js,jsx && tsc"
 	},
 	"repository": {},
@@ -20,6 +19,7 @@
 		"@remotion/renderer": "^2.1.5",
 		"@types/express": "^4.17.9",
 		"@types/react": "^17.0.0",
+		"dotenv": "^10.0.0",
 		"eslint": "^7.15.0",
 		"express": "^4.17.1",
 		"lottie-react": "^2.1.0",

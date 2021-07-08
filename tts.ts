@@ -1,5 +1,7 @@
 import { news } from './src/news'
 import * as fs from 'fs';
+import {spawn, exec} from 'child_process';
+
 var wavFileInfo = require('wav-file-info');
 // import * as fetch from ;
 const fetch = require('node-fetch')
@@ -26,7 +28,24 @@ function newsYield(items: any, i: number, meta: {duration: Array<any>}) {
 }
 
 function main() {
-  newsYield(news, 0, {duration: []});
+  // newsYield(news, 0, {duration: []});
+  console.log(process.env.HOME)
+  execE(news, 0, {duration: []});
+}
+
+function execE(items: Array<any>, i: number, meta: {duration: Array<any>}) {
+  const comm = exec(`docker run -e "HOME=$\{HOME\}" -v "$HOME:$\{HOME\}" -w "$\{PWD\}" --user "$(id -u):$(id -g)" "synesthesiam/coqui-tts:latest" --text "${items[i]}" --out_path $HOME/t${i}.wav`, (e, o, stderr) => {
+    if (e) { console.log(e); return; }
+    wavFileInfo.infoByFilename(`./audio/t${i}.wav`, function(err: any, info: any){
+      console.log('duration', Math.ceil(info.duration));
+      meta.duration.push(Math.ceil(info.duration));
+    });
+    if (i + 1 < items.length) {
+      execE(items, items[i + 1] ? i + 1 : i + 2, meta);
+    } else {
+      fs.writeFile('./audio/meta.json', JSON.stringify(meta), () => {});
+    }
+  });
 }
 
 const cps = main();
