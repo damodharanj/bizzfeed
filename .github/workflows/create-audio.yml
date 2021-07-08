@@ -21,10 +21,8 @@ jobs:
       - run: sudo apt install ffmpeg
       - run: docker pull "synesthesiam/coqui-tts:latest"
       - run: npm i
-      - run: npm run build -- --props="$WORKFLOW_INPUT"
-        env:
-          WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
+      - run: npm run tts
       - uses: actions/upload-artifact@v2
         with:
-          name: out.mp4
-          path: out.mp4
+          name: t1.wav
+          path: ./audio/t1.wav
