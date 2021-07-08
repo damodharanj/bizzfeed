@@ -9,7 +9,7 @@ on:
         description: "Which color should it be in?"
         required: true
         default: "black"
-name: Render video
+name: Create audio
 jobs:
   render:
     name: Render video
