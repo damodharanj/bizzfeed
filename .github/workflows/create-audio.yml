@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@main
       - run: sudo apt update
       - run: sudo apt install ffmpeg
+      - run: docker pull "synesthesiam/coqui-tts:latest"
       - run: npm i
       - run: npm run build -- --props="$WORKFLOW_INPUT"
         env:
