@@ -1,9 +1,9 @@
 export const news = [
 
-  `TikTok eyes India comeback highlighting that it was compliant with India new IT rules despite not being operational in the country`,
+  `Social commerce platform DealShare has raised $144 million, at a valuation of $455 million led by New York venture fund Tiger Global`,
 
   '',
 
-  `Edtech firm Byju's has raised $50 million in a Series F round from IIFL's private equity fund ($35 million) and Maitri Edtech ($15 million) at $16.5 billion valuation`,
+  `Singapore government's investment fund Temasek Holdings and private equity major Warburg Pincus are leading a $500 million funding round in Ola ahead of its planned IPO`,
 
 ];
