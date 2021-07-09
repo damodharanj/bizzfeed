@@ -34,7 +34,7 @@ function main() {
 }
 
 function execE(items: Array<any>, i: number, meta: {duration: Array<any>}) {
-  const comm = exec(`docker run -e "HOME=$\{HOME\}" -v "$HOME:$\{HOME\}" -w "$\{PWD\}" --user "$(id -u):$(id -g)" "synesthesiam/coqui-tts:latest" --text "${items[i]}" --out_path $HOME/t${i}.wav`, (e, o, stderr) => {
+  const comm = exec(`docker run -e "HOME=$\{HOME\}" -v "$HOME:$\{HOME\}" -w "$\{PWD\}" --user "$(id -u):$(id -g)" "synesthesiam/coqui-tts:0.0.13.2" --text "${items[i]}" --out_path $HOME/t${i}.wav`, (e, o, stderr) => {
     if (e) { console.log(e); return; }
     console.log(o);
     wavFileInfo.infoByFilename(`./audio/t${i}.wav`, function(err: any, info: any){
