@@ -22,6 +22,7 @@ jobs:
       - run: docker pull "synesthesiam/coqui-tts:0.0.13.2"
       - run: npm i
       - run: npm run tts
+      - run: docker run -e "HOME=${HOME}" -v "$HOME:${HOME}" -w "${PWD}" --user "$(id -u):$(id -g)" "synesthesiam/coqui-tts:latest" --text "Social commerce platform DealShare has raised $144 million, at a valuation of $455 million led by New York venture fund Tiger Global" --out_path $HOME/t0.wav
       - run: ls audio
       - uses: actions/upload-artifact@v2
         with:
