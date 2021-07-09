@@ -25,5 +25,5 @@ jobs:
       - run: ls audio
       - uses: actions/upload-artifact@v2
         with:
-          name: audio/t0.wav
+          name: t0.wav
           path: audio/t0.wav
