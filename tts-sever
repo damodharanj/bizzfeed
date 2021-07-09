@@ -35,7 +35,7 @@ while [[ -n "$1" ]]; do
 done
 
 if [[ -n "${update}" ]]; then
-    docker pull "synesthesiam/coqui-tts:${tag}"
+    docker pull "synesthesiam/coqui-tts:0.0.13.2"
 fi
 
 "${docker}" run \
@@ -46,5 +46,5 @@ fi
             -p 5002:5002 \
             --user "$(id -u):$(id -g)" \
             --entrypoint 'tts-server' \
-            "synesthesiam/coqui-tts:${tag}" \
+            "synesthesiam/coqui-tts:0.0.13.2" \
             "${args[@]}"
