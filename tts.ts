@@ -36,6 +36,7 @@ function main() {
 function execE(items: Array<any>, i: number, meta: {duration: Array<any>}) {
   const comm = exec(`docker run -e "HOME=$\{HOME\}" -v "$HOME:$\{HOME\}" -w "$\{PWD\}" --user "$(id -u):$(id -g)" "synesthesiam/coqui-tts:latest" --text "${items[i]}" --out_path $HOME/t${i}.wav`, (e, o, stderr) => {
     if (e) { console.log(e); return; }
+    console.log(o);
     wavFileInfo.infoByFilename(`./audio/t${i}.wav`, function(err: any, info: any){
       console.log('duration', Math.ceil(info.duration));
       meta.duration.push(Math.ceil(info.duration));
