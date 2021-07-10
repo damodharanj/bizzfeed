@@ -1,9 +1,13 @@
 export const news = [
 
-  `Social commerce platform DealShare has raised $144 million, at a valuation of $455 million led by New York venture fund Tiger Global`,
+  `Indian Unicorns & soonicorns (potential unicorns) hired close to 65k executives for white collared jobs in last 15 months, as Covid-19 situation accelerated digital adoption`,
 
   '',
 
-  `Singapore government's investment fund Temasek Holdings and private equity major Warburg Pincus are leading a $500 million funding round in Ola ahead of its planned IPO`,
+  `Delhi High Court bats for Uniform Civil Code (UCC); stressed the need for India to have common code in the matters of marriage, divorce & succession`,
+
+  '',
+
+  `India and the United Kingdom (UK) resolved to deepen financial services cooperation between the two countries during the latest round of India-UK Financial Markets Dialogue which was held virtually`
 
 ];
