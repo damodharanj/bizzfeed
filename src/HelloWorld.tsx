@@ -60,12 +60,12 @@ const Title = ({ title, index }) => {
   
   return (
     <div className={"container news-gradient"}>
-      <div className={"card"} style={{ transform: `translateY(${scale})`, fontSize: 100 }}>
-        <Img
+      <div className={"card"} style={{ transform: `translateY(${scale})`, fontSize: 90 }}>
+        {/* <Img
           style={{ width: '300px', height: '100%' }}
           src={logo}
           alt=""
-        />
+        /> */}
 
         <div class="inner">
           {title.split(' ').map((w, i) => {
@@ -128,8 +128,8 @@ export const comm = val => () => {
             durationInFrames={!n.length ? animationDuration * fps : durationInfo.duration[i / 2] * fps}
           >
             {!n.length ? (
-							<div ref={uiref} className={"svg-holder news-gradient-1"} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-								<h1 style={{position: 'absolute', top: '60px', backgroundColor: 'white'}}>KiranDheep - Bizzfeed</h1>
+							<div ref={uiref} className={"svg-holder news-gradient-1"} style={{fontSize: 40, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+								<h1 style={{position: 'absolute', top: '60px'}}>KiranDheep - Bizzfeed</h1>
 								<Lottier
 								stayAtLastFrame={true}
 								data={data}
@@ -146,7 +146,7 @@ export const comm = val => () => {
       ))}
       <div class="bottom">
         <div>Sponsered By</div>
-        <img class="img" src={sponser} alt="" />
+        <img class="img" src={logo} alt="" />
       </div>
     </div>
   );
