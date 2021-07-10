@@ -1,5 +1,5 @@
 import {Composition} from 'remotion';
-import {comm, eachDuration, animationDuration, fps, sumReduce} from './HelloWorld';
+import {comm, eachDuration, animationDuration, fps, sumReduce, Intro} from './HelloWorld';
 import { news } from './news';
 import durationInfo from '../audio/meta.json';
 import {Logo} from './HelloWorld/Logo';
@@ -16,12 +16,23 @@ export const RemotionVideo: React.FC = () => {
 				component={comm(news)}
 				durationInFrames={ durationInfo.duration.reduce(sumReduce, 0) * fps + news.length * fps}
 				fps={30}
-				width={1920}
-				height={1080}
+				width={1080}
+				height={1920}
 				defaultProps={{
 					titleText: 'Welcome to Remotion',
 					titleColor: 'black',
 				}}
+			/>
+			<Composition
+				id="Intro"
+				component={Intro}
+				durationInFrames={2 * 30}
+				fps={30}
+				width={1080}
+				height={1920}
+				defaultProps={
+					new Date()
+				}
 			/>
 		</>
 	);
