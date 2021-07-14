@@ -1,6 +1,6 @@
 export const news = [
 
-  `Facebook plans to pay creators $1B to use its products`,
+  `Facebook plans to pay creators one billion dollars to use its products`,
 
   '',
 
@@ -16,7 +16,7 @@ export const news = [
 
   '',
 
-  `Clubhouse launches its DM feature Backchannel`,
+  `Clubhouse launches its D M feature Backchannel`,
 
   '',
 

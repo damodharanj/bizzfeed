@@ -1,4 +1,4 @@
-import { news } from './src/news'
+import { news } from './src/audio'
 import * as fs from 'fs';
 import {spawn, exec} from 'child_process';
 
