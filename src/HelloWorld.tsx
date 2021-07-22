@@ -55,16 +55,16 @@ const Title = ({ title, index }) => {
   
   const audioSrc: any = audios; 
   const frame = useCurrentFrame();
-  const audioData = useAudioData(`../audio/t${index}.wav`);
+  // const audioData = useAudioData(`../audio/t${index}.wav`);
   let visualization;
-  if (audioData) { 
-    visualization = visualizeAudio({
-      fps,
-      frame,
-      audioData,
-      numberOfSamples: 16,
-    }) // [0.22, 0.1, 0.01, 0.01, 0.01, 0.02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  }
+  // if (audioData) { 
+  //   visualization = visualizeAudio({
+  //     fps,
+  //     frame,
+  //     audioData,
+  //     numberOfSamples: 16,
+  //   }) // [0.22, 0.1, 0.01, 0.01, 0.01, 0.02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  // }
   
   const scale = spring({
     fps,
@@ -103,13 +103,13 @@ const Title = ({ title, index }) => {
             );
           })}
         </div>
-        <div className={'news-gradient shadow'} style={{display: 'flex', justifyContent: 'center' , alignItems: 'center', backgroundColor: 'red', height: 120 , borderRadius: '20px' ,margin: '10px' ,padding: '20px'}}>
+        {/* <div className={'news-gradient shadow'} style={{display: 'flex', justifyContent: 'center' , alignItems: 'center', backgroundColor: 'red', height: 120 , borderRadius: '20px' ,margin: '10px' ,padding: '20px'}}>
         {visualization ? visualization.map((v) => {
           return (
             <div style={{width: 20, margin: 5, height: 240 * v, backgroundColor: 'black'}} />
           )
         }): ''}
-        </div>
+        </div> */}
         
       </div>
     </div>
