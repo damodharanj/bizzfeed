@@ -1,10 +1,10 @@
 import {Composition} from 'remotion';
-import {comm, eachDuration, animationDuration, fps, sumReduce, Intro} from './HelloWorld';
-import { news } from './news';
+import {comm, eachDuration, animationDuration, fps, sumReduce, Intro, news} from './HelloWorld';
 import durationInfo from '../audio/meta.json';
-import {Logo} from './HelloWorld/Logo';
-import {Subtitle} from './HelloWorld/Subtitle';
-import {Title, } from './HelloWorld/Title';
+
+
+
+
 
 
 
@@ -14,7 +14,7 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="HelloWorld"
 				component={comm(news)}
-				durationInFrames={ durationInfo.duration.reduce(sumReduce, 0) * fps + news.length * fps}
+				durationInFrames={ durationInfo.duration.reduce(sumReduce, 0) * fps + news.length / 2 * (fps * animationDuration)}
 				fps={30}
 				width={1080}
 				height={1920}

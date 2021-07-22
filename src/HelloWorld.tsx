@@ -4,14 +4,19 @@ import logo from './logo.jpeg';
 import { Player } from '@remotion/player';
 import { Audio, useCurrentFrame, interpolate, spring, Sequence, Img, AbsoluteFill } from 'remotion';
 import Lottie from 'lottie-react';
-import { news } from './news';
+// import { news } from './';
 import { Lottier, useLottie } from 'remotion-lottie';
 import durationInfo from '../audio/meta.json';
 import data from './stock.json';
 import * as audios from '../audio/audio';
-
+import {useAudioData, visualizeAudio} from '@remotion/media-utils'
+const json = require('../input.json');
 
 console.log(audios);
+
+export const news = json.newsItems.map(x => [x.text, '']).flat().slice(0, -1);
+
+console.log('news', news);
 
 const colors = ['purple', 'green', 'blue', 'red'];
 
@@ -47,8 +52,20 @@ export const Intro = () => {
 }
 
 const Title = ({ title, index }) => {
+  
+  const audioSrc: any = audios; 
   const frame = useCurrentFrame();
-
+  const audioData = useAudioData(`../audio/t${index}.wav`);
+  let visualization;
+  if (audioData) { 
+    visualization = visualizeAudio({
+      fps,
+      frame,
+      audioData,
+      numberOfSamples: 16,
+    }) // [0.22, 0.1, 0.01, 0.01, 0.01, 0.02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  }
+  
   const scale = spring({
     fps,
     from: 0,
@@ -57,9 +74,14 @@ const Title = ({ title, index }) => {
   });
 
   const boldDuration = (durationInfo.duration[index / 2] * fps) / title.split(' ').length;
-  
+
+  const zoom = interpolate(frame - 10, [0, parseInt(durationInfo.duration[index  / 2])], [1, 1.01]);
+
+  console.log(json.newsItems, index)
+
   return (
     <div className={"container news-gradient"}>
+      <Img style={{transform: `scale(${zoom})`, margin: 10, opacity: 0.1, position: 'absolute', height: '100%', width: '100%'}} src={json.newsItems[index / 2].img}></Img>
       <div className={"card"} style={{ transform: `translateY(${scale})`, fontSize: 90 }}>
         {/* <Img
           style={{ width: '300px', height: '100%' }}
@@ -67,20 +89,28 @@ const Title = ({ title, index }) => {
           alt=""
         /> */}
 
-        <div class="inner">
+        <div className={"inner"}>
           {title.split(' ').map((w, i) => {
             return (
               <span
                 style={{
                   fontWeight: i * boldDuration <= frame ? 'bold' : ''
                 }}
-                class="word"
+                className={"word"}
               >
                 {w}
               </span>
             );
           })}
         </div>
+        <div className={'news-gradient shadow'} style={{display: 'flex', justifyContent: 'center' , alignItems: 'center', backgroundColor: 'red', height: 120 , borderRadius: '20px' ,margin: '10px' ,padding: '20px'}}>
+        {visualization ? visualization.map((v) => {
+          return (
+            <div style={{width: 20, margin: 5, height: 240 * v, backgroundColor: 'black'}} />
+          )
+        }): ''}
+        </div>
+        
       </div>
     </div>
   );
@@ -88,7 +118,7 @@ const Title = ({ title, index }) => {
 
 export const eachDuration = 5;
 
-export const animationDuration = 2;
+export const animationDuration = 1;
 
 export const sponser = 'https://damo.js.org/poong.png';
 
@@ -102,6 +132,40 @@ const itemDuration = (item: number) => durationInfo.duration.slice(0, item).redu
 
 console.log(itemDuration, durationInfo)
 
+const NewsItem = ({i, n, audioSrc, uiref, frame}: any) => {
+
+  const calculateFrom = () => {
+    const val = !n.length
+    ? 
+    Math.floor(i / 2) * animationDuration * fps + itemDuration(Math.ceil(i / 2)) * fps + (2 * animationDuration * fps)
+    : itemDuration(Math.ceil(i / 2)) * fps + Math.floor(i / 2) * fps + (2 * animationDuration * fps)
+    return val;
+  }
+
+  console.log(i, audioSrc);
+  return <Sequence
+      from={
+        calculateFrom()
+      }
+      durationInFrames={!n.length ? animationDuration * fps : durationInfo.duration[i / 2] * fps}
+    >
+      {!n.length ? (
+        <div ref={uiref} className={"svg-holder news-gradient-1"} style={{fontSize: 40, display: 'flex', backgroundImage: 'url(https://damo.js.org/poong.png)', justifyContent: 'center', alignItems: 'center'}}>
+          <h1 style={{position: 'absolute', top: '60px'}}>KiranDheep - Bizzfeed</h1>
+          <Lottier
+          stayAtLastFrame={true}
+          data={data}
+        />
+        </div>
+      ) : (
+        <>
+        <Audio src={audioSrc[`t${i}`]} />
+        <Title title={n} index={i} />
+        </>
+      )}
+    </Sequence>
+}
+
 export const comm = val => () => {
   const frame = useCurrentFrame();
 	const uiref = useRef(null);
@@ -112,36 +176,14 @@ export const comm = val => () => {
 		}
 	})
 
-  const as: any = audios;
+  const audioSrc: any = audios; 
+  // const audioData = useAudioData(music)
   return (
     <div>
       <Intro/>
       {val.map((n, i) => (
         <>
-          <Sequence
-            from={
-              !n.length
-                ? Math.floor(i / 2) * animationDuration * fps +
-                  itemDuration(Math.ceil(i / 2)) * fps + (2 * fps)
-                : itemDuration(Math.ceil(i / 2)) * fps + i * fps + (2 * fps)
-            }
-            durationInFrames={!n.length ? animationDuration * fps : durationInfo.duration[i / 2] * fps}
-          >
-            {!n.length ? (
-							<div ref={uiref} className={"svg-holder news-gradient-1"} style={{fontSize: 40, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-								<h1 style={{position: 'absolute', top: '60px'}}>KiranDheep - Bizzfeed</h1>
-								<Lottier
-								stayAtLastFrame={true}
-								data={data}
-              />
-							</div>
-            ) : (
-              <>
-              <Audio src={as[`t${i}`]} />
-              <Title title={n} index={i} />
-              </>
-            )}
-          </Sequence>
+          <NewsItem n={n} i={i} audioSrc={audioSrc} uiref={uiref} frame={frame}></NewsItem>
         </>
       ))}
       <div class="bottom">

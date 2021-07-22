@@ -1,6 +1,7 @@
 import { news } from './src/audio'
 import * as fs from 'fs';
 import {spawn, exec} from 'child_process';
+const json = require('./input.json')
 
 var wavFileInfo = require('wav-file-info');
 // import * as fetch from ;
@@ -29,15 +30,15 @@ function newsYield(items: any, i: number, meta: {duration: Array<any>}) {
 
 function main() {
   // newsYield(news, 0, {duration: []});
-  console.log(process.env.HOME)
-  execE(news, 0, {duration: []});
+  console.log(process.env.HOME, json)
+  execE(json.newsItems, 0, {duration: []});
 }
 
 function execE(items: Array<any>, i: number, meta: {duration: Array<any>}) {
-  const comm = exec(`docker run -e "HOME=$\{HOME\}" -v "$HOME:$\{HOME\}" -w "$\{PWD\}" --user "$(id -u):$(id -g)" "synesthesiam/coqui-tts:0.0.13.2" --text "${items[i]}" --out_path $HOME/t${i}.wav`, (e, o, stderr) => {
+  const comm = exec(`docker run -e "HOME=$\{HOME\}" -v "$HOME:$\{HOME\}" -w "$\{PWD\}" --user "$(id -u):$(id -g)" "synesthesiam/coqui-tts:0.0.13.2" --text "${items[i].audio}" --out_path $HOME/t${2 * i}.wav`, (e, o, stderr) => {
     if (e) { console.log(e); return; }
     console.log(o);
-    wavFileInfo.infoByFilename(`./audio/t${i}.wav`, function(err: any, info: any){
+    wavFileInfo.infoByFilename(`./audio/t${2 * i}.wav`, function(err: any, info: any){
       console.log('duration', Math.ceil(info.duration));
       meta.duration.push(Math.ceil(info.duration));
       if (items[i + 1]) {
@@ -47,7 +48,9 @@ function execE(items: Array<any>, i: number, meta: {duration: Array<any>}) {
       } else {
         console.log(meta);
         fs.writeFile('./audio/meta.json', JSON.stringify(meta), () => {});
-        fs.writeFile('./audio/audio.ts', `${items.filter(i => i.length).map((item, i) => `import audio${2 * i} from './t${2 * i}.wav'; \n export const t${2 * i} = audio${2 * i};`).join('\n')}`, () => {});
+        fs.writeFile('./audio/audio.ts', `${items.filter(i => i.text.length).map((item, i) => `import audio${2 * i} from './t${2 * i}.wav'; \n export const t${2 * i} = audio${2 * i};`).join('\n')}`, () => {
+          console.log('writing ts file!')
+        });
       }
     });
   });
