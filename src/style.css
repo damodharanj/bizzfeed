@@ -56,16 +56,16 @@
 }
 
 .bottom {
-  width: 80px;
-  height: 110px;
+  width: 200px;
+  height: 267px;
   position: absolute;
-  bottom: 50px;
+  bottom: 0px;
   right: 50px;
 }
 
 .img {
-  width: 80px;
-  height: 80px;
+  width: 200px;
+  height: 200px;
 }
 
 .container {

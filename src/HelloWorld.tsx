@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './style.css';
-import logo from './logo.jpeg';
+import logo from '../logo.png';
 import { Player } from '@remotion/player';
 import { Audio, useCurrentFrame, interpolate, spring, Sequence, Img, AbsoluteFill } from 'remotion';
 import Lottie from 'lottie-react';
@@ -151,7 +151,7 @@ const NewsItem = ({i, n, audioSrc, uiref, frame}: any) => {
     >
       {!n.length ? (
         <div ref={uiref} className={"svg-holder news-gradient-1"} style={{fontSize: 40, display: 'flex', backgroundImage: 'url(https://damo.js.org/poong.png)', justifyContent: 'center', alignItems: 'center'}}>
-          <h1 style={{position: 'absolute', top: '60px'}}>KiranDheep - Bizzfeed</h1>
+          <h1 style={{position: 'absolute', top: '60px'}}>Nilayam - News</h1>
           <Lottier
           stayAtLastFrame={true}
           data={data}
